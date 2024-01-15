@@ -8,4 +8,5 @@ namespace API.DTOs
         public string PlaceFound { get; set; }
         public DocumentType DocumentType { get; set; }
     }
+
 }

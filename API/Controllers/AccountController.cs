@@ -1,6 +1,7 @@
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Interfaces;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,10 +16,12 @@ namespace API.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly TokenService _tokeservice;
+        private readonly ICurrentUserService _currentUserService;
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-                                 TokenService tokeservice)
+                                 TokenService tokeservice, ICurrentUserService currentUserService)
         {
             _tokeservice = tokeservice;
+            _currentUserService = currentUserService;
             _signInManager = signInManager;
             _userManager = userManager;
         }
@@ -78,10 +81,11 @@ namespace API.Controllers
 
         private UserDto CreateUserObj(AppUser user)
         {
+
             return new UserDto
             {
                 Token = _tokeservice.CreateToken(user),
-                Username = user.UserName
+                Username = user.UserName,
             };
         }
 

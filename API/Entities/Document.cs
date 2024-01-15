@@ -9,7 +9,6 @@ namespace API.Entities
         public string PlaceFound { get; set; }
         public DocumentType DocumentType { get; set; }
         public DateTime DateFound { get; set; }
-        public bool IsFound { get; set; } = false;
-
+        public bool IsFound { get; set; } 
     }
 }

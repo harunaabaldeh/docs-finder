@@ -4,7 +4,7 @@ namespace API.DTOs
     {
         public string Username { get; set; }
         public string Token { get; set; }
-        public List<DocumentDto> Documents { get; set; } = new List<DocumentDto>();
+        public List<DocumentDto> Documents { get; set; }
 
     }
 }
