@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { router } from "../../app/router/Router";
-import agent from "../../app/api/agent";
+import { useAuth } from "../../app/store/Auth/AuthContext";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
+  const { login } = useAuth();
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -10,15 +11,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const user = await agent.Account.login({
-        email,
-        password,
-      });
-
-      const token = user.token;
-
-      localStorage.setItem("userToken", token);
-      router.navigate("/documents");
+      await login(email, password);
     } catch (error) {
       console.log("Failed to login", error);
     }
@@ -83,32 +76,38 @@ const LoginForm = () => {
                 </a>
               </div>
             </div>
-            <button className="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center">
+            <button
+              type="submit"
+              className="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
                 />
               </svg>
-              <span>
-                <button type="submit">Login</button>
-              </span>
+              <span>Login</span>
             </button>
+
             <p className="text-center">
               Not registered yet?{" "}
               <a
                 href="#"
                 className="text-indigo-600 font-medium inline-flex space-x-1 items-center"
               >
-                <span>Register now </span>
+                <span>
+                  <Link to='/register'>
+                    Register now
+                  </Link>
+                </span>
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -116,11 +115,11 @@ const LoginForm = () => {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                     />
                   </svg>

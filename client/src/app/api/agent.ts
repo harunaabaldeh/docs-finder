@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { LoginRequest, User, UserFormValues } from "../models/user";
+
 import { MissingDocument } from "../models/missingDocument";
+import User, { LoginRequest, UserFormValues } from "../models/user";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = false;
@@ -35,6 +36,9 @@ const Account = {
     requests.post<User>("/account/login", loginRequest),
   register: (user: UserFormValues) =>
     requests.post<User>("account/register", user),
+  setToken: (token: string) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  },
 };
 
 const agent = {

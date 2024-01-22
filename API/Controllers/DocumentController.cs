@@ -17,10 +17,12 @@ namespace API.Controllers
             _context = context;
             _currentUserService = currentUserService;
         }
-
+        
         [HttpGet]
         public async Task<IResult> GetDocuments()
         {
+            var userId = _currentUserService.GetUserId();
+            
             var documents = await _context.Documents.Where(d => !d.IsFound)
                 .OrderByDescending(d => d.DateFound)
                 .ToListAsync();
